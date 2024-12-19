@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>个人介绍-我的个人网站</title>
+    <link rel="stylesheet" href="./layout(public).css">
+	<link rel="stylesheet" href="./layout.css">
+    <style>
+        .ai-chat-widget {
+            position: fixed;
+            right: 20px;
+            top: 20px;
+            width: 300px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+    
+        .chat-header {
+            padding: 10px;
+            background: #e86b6b;
+            color: white;
+            border-radius: 10px 10px 0 0;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    
+        .chat-body {
+            height: 250px;
+            display: none;
+        }
+    
+        .chat-messages {
+            height: 200px;
+            overflow-y: auto;
+            padding: 10px;
+            background: #f9f9f9;
+        }
+    
+        .chat-input-area {
+            padding: 10px;
+            display: flex;
+            gap: 5px;
+            background: white;
+            border-radius: 0 0 10px 10px;
+        }
+    
+        .chat-input {
+            flex: 1;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+    
+        .chat-send {
+            padding: 5px 10px;
+            background: #fc56a1;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+    
+        .message {
+            margin: 5px 0;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+    
+        .user-message {
+            background: #e3f2fd;
+            margin-left: 20%;
+        }
+    
+        .ai-message {
+            background: #f5f5f5;
+            margin-right: 20%;
+        }
+    
+        .minimize-btn {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="ai-chat-widget">
+        <div class="chat-header">
+            <span>AI助手</span>
+            <button class="minimize-btn">−</button>
+        </div>
+        <div class="chat-body">
+            <div class="chat-messages" id="chat-messages">
+                <div class="message ai-message">你好！我是AI助手，有什么可以帮你的吗？</div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" class="chat-input" placeholder="输入消息...">
+                <button class="chat-send">发送</button>
+            </div>
+        </div>
+    </div>
+    <header>
+        <h1>欢迎来到我的个人AI知识库网站</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="index.html">网站首页</a></li>
+			<li><a href="index1.html">兴趣爱好</a></li>
+			<li><a href="index2.html">AI知识库</a></li>
+			<li><a href="index3.html">留言板</a></li>
+		</ul>
+    </nav>
+	<main>
+         <h2>关于我</h2>
+         <div class="profile">
+             <img src="img/t2.jpg" alt="个人照片">
+	         <div class="profile-info">
+                 <p>姓名:汤锦煜</p>
+                 <p>年龄:20岁</p>
+                 <p>家乡:中国-陕西</p>
+                 <p>学校:西北大学</p>
+             </div>
+         </div>
+         <h2>我的技能</h2>
+         <div class="skills">
+             <div class="skill-item">
+                 <h3>视频剪辑</h3>
+                 <p>熟练使用Adobe Premiere、Final
+                    Cut等专业视频编辑软件,能够独立完成视频的剪辑、特效、调色、字幕等后期制作。擅长制作宣传视频。
+                 </p> 
+             </div>
+             <div class="skill-item">
+                 <h3>数据分析</h3>
+                 <p>熟悉Python、SPSS、八爪鱼等数据分析库,能够对数据进行清洗、转换、可视化等操作。
+				 </p>
+             </div>
+             <div class="skill-item">
+                 <h3>绘图设计</h3>
+                 <p>熟悉Photoshop、可画等设计工具,能够完成各类图像设计和原型制作。了解用户体验设计的基本原则，能够设计出美观、易用的界面。</p>
+             </div>
+
+         </div>
+		
+     </main>
+     <footer>
+         &copy;2024 汤锦煜原创设计
+	 </footer>
+     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatWidget = document.querySelector('.ai-chat-widget');
+            const chatHeader = document.querySelector('.chat-header');
+            const chatBody = document.querySelector('.chat-body');
+            const minimizeBtn = document.querySelector('.minimize-btn');
+            const sendButton = document.querySelector('.chat-send');
+            const chatInput = document.querySelector('.chat-input');
+            const chatMessages = document.querySelector('.chat-messages');
+    
+            // 切换聊天框显示/隐藏
+            chatHeader.addEventListener('click', function(e) {
+                if (!e.target.classList.contains('minimize-btn')) {
+                    chatBody.style.display = chatBody.style.display === 'none' ? 'block' : 'none';
+                }
+            });
+    
+            // 发送消息
+            function sendMessage() {
+                const message = chatInput.value.trim();
+                if (message) {
+                    // 添加用户消息
+                    addMessage('user', message);
+                    
+                    // 模拟AI回复
+                    setTimeout(() => {
+                        addMessage('ai', `收到你的消息："${message}"。我会尽快回复你。`);
+                    }, 1000);
+    
+                    chatInput.value = '';
+                }
+            }
+    
+            // 添加消息到聊天框
+            function addMessage(sender, text) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${sender}-message`;
+                messageDiv.textContent = text;
+                chatMessages.appendChild(messageDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+    
+            // 发送按钮点击事件
+            sendButton.addEventListener('click', sendMessage);
+    
+            // 回车发送消息
+            chatInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+        });
+    </script>
+</body>
+	
+</html>
+	
